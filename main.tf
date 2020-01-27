@@ -9,12 +9,7 @@ resource "azurerm_mysql_server" "mysql" {
   location            = var.location
   resource_group_name = azurerm_resource_group.mysql.name
 
-  sku {
-    name     = var.sku_name
-    capacity = var.sku_capacity
-    tier     = var.sku_tier
-    family   = var.sku_family
-  }
+	sku_name   = var.sku_name
 
   storage_profile {
     storage_mb            = var.storage_mb
