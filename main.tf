@@ -1,3 +1,7 @@
+provider "azurerm" {
+  version = ">=1.40.0"
+}
+
 resource "azurerm_resource_group" "mysql" {
   count    = var.resource_group_create ? 1 : 0
   name     = var.resource_group_name
