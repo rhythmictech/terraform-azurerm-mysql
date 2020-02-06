@@ -4,26 +4,20 @@ variable "resource_group_name" {
   default     = "mysqlResourceGroup"
 }
 
+variable "resource_group_create" {
+  description = "Set to false if the resource group already exists"
+  type        = bool
+  default     = true
+}
+
 variable "location" {
   description = "Specifies the supported Azure location where the resource exists."
   type        = string
 }
 
-variable "auto_grow" {
-  description = "(Optional) Defines whether autogrow is enabled or disabled for the storage. Valid values are Enabled or Disabled."
-  type        = string
-  default     = "Enabled"
-}
-
 variable "name" {
   description = "The name of the server and resources to be created."
   type        = string
-}
-
-variable "db_name" {
-  description = "The name of the database to be created."
-  type        = string
-  default     = ""
 }
 
 variable "admin_username" {
@@ -34,18 +28,6 @@ variable "admin_username" {
 variable "password" {
   description = "The administrator password of the MySQL Server."
   type        = string
-}
-
-variable "start_ip_address" {
-  description = "Defines the start IP address used in your database firewall rule."
-  type        = string
-  default     = "0.0.0.0"
-}
-
-variable "end_ip_address" {
-  description = "Defines the end IP address used in your database firewall rule."
-  type        = string
-  default     = "255.255.255.255"
 }
 
 variable "db_version" {
@@ -66,24 +48,6 @@ variable "sku_name" {
   default     = "B_Gen4_2"
 }
 
-variable "sku_capacity" {
-  description = "The scale up/out capacity, representing server's compute units."
-  type        = number
-  default     = 2
-}
-
-variable "sku_tier" {
-  description = "The tier of the particular SKU. Possible values are Basic, GeneralPurpose, and MemoryOptimized."
-  type        = string
-  default     = "Basic"
-}
-
-variable "sku_family" {
-  description = "The family of hardware Gen4 or Gen5, before selecting your family check the product documentation for availability in your region."
-  type        = string
-  default     = "Gen4"
-}
-
 variable "storage_mb" {
   description = "Max storage allowed for a server. Possible values are between 5120 MB(5GB) and 1048576 MB(1TB) for the Basic SKU and between 5120 MB(5GB) and 4194304 MB(4TB) for General Purpose/Memory Optimized SKUs."
   type        = number
@@ -102,6 +66,13 @@ variable "geo_redundant_backup" {
   default     = "Disabled"
 }
 
+variable "auto_grow" {
+  description = "(Optional) Defines whether autogrow is enabled or disabled for the storage. Valid values are Enabled or Disabled."
+  type        = string
+  default     = "Enabled"
+}
+
+
 variable "charset" {
   description = "Specifies the Charset for the MySQL Database, which needs to be a valid MySQL Charset."
   type        = string
@@ -114,12 +85,26 @@ variable "collation" {
   default     = "utf8_unicode_ci"
 }
 
-variable "tags" {
-  description = "Resource Tags."
+variable "dbs" {
+  description = "Map of databases to create, values supported: name, charset, collation"
   type        = map(string)
   default     = {}
 }
 
-locals {
-  db_name = var.db_name == "" ? var.name : var.db_name
+variable "firewall_rules" {
+  description = "Map of firewall rules to create. Key is rule name, values are start_ip, end_ip"
+  type        = map(string)
+  default     = {}
+}
+
+variable "vnet_rules" {
+  description = "Map of vnet rules to create. Key is name, value is vnet id"
+  type        = string
+  default     = {}
+}
+
+variable "tags" {
+  description = "Resource Tags."
+  type        = map(string)
+  default     = {}
 }
