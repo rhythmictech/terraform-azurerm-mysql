@@ -1,7 +1,3 @@
-provider "azurerm" {
-  version = ">=1.40.0"
-}
-
 resource "azurerm_resource_group" "mysql" {
   count    = var.resource_group_create ? 1 : 0
   name     = var.resource_group_name
@@ -34,8 +30,8 @@ resource "azurerm_mysql_database" "database" {
   for_each            = var.dbs
 
   name                = each.value.name
-  charset             = lookup(each.value, "charset", var.db_charset)
-  collation           = lookup(each.value, "collation", var.db_collation)
+  charset             = lookup(each.value, "charset", "utf8")
+  collation           = lookup(each.value, "collation", "utf8_unicode_ci")
   resource_group_name = var.resource_group_name
   server_name         = azurerm_mysql_server.server.name
 }

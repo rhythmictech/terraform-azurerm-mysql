@@ -87,19 +87,25 @@ variable "collation" {
 
 variable "dbs" {
   description = "Map of databases to create, values supported: name, charset, collation"
-  type        = map(string)
+  type        = map
   default     = {}
 }
 
 variable "firewall_rules" {
   description = "Map of firewall rules to create. Key is rule name, values are start_ip, end_ip"
-  type        = map(string)
+  type        = map
   default     = {}
 }
 
 variable "vnet_rules" {
   description = "Map of vnet rules to create. Key is name, value is vnet id"
-  type        = string
+  type        = map
+  default     = {}
+}
+
+variable "mysql_configurations" {
+  description = "Map of MySQL configuration settings to create. Key is name, value is vnet id"
+  type        = map
   default     = {}
 }
 
