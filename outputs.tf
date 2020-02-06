@@ -1,11 +1,11 @@
 output "fqdn" {
   description = "The fqdn of MySQL Server."
-  value       = azurerm_mysql_server.mysql.fqdn
+  value       = azurerm_mysql_server.server.fqdn
 }
 
 output "server_name" {
   description = "The server name of MySQL Server."
-  value       = azurerm_mysql_server.mysql.name
+  value       = azurerm_mysql_server.server.name
 }
 
 output "admin_username" {
